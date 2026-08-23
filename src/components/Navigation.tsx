@@ -43,6 +43,7 @@ export default function Navigation() {
 
   return (
     <nav
+      aria-label="Primary"
       className={`fixed top-12 left-0 right-0 z-40 transition-all duration-500 ${
         isScrolled
           ? "bg-plug-black/80 backdrop-blur-xl border-b border-white/5"
