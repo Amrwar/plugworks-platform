@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 
 import { NAV_LINKS } from "@/data/navigation";
-import { SOCIAL_LINKS } from "@/data/social";
+import SocialLinks from "@/components/SocialLinks";
 import { copyrightLine } from "@/lib/dates";
 import { SITE } from "@/data/site";
 
@@ -110,20 +110,7 @@ export default function Footer() {
           </p>
 
           {/* Social links */}
-          <div className="flex items-center gap-4">
-            {SOCIAL_LINKS.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={link.label}
-                className="w-10 h-10 rounded-full bg-plug-gray/50 flex items-center justify-center text-plug-light/50 hover:text-plug-electric hover:bg-plug-gray transition-all duration-300"
-              >
-                {SOCIAL_ICONS[link.id]}
-              </a>
-            ))}
-          </div>
+          <SocialLinks icons={SOCIAL_ICONS} />
         </div>
       </div>
     </footer>
