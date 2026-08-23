@@ -26,3 +26,16 @@ export function metaDescription(text: string = SITE.description, limit = 160): s
   const lastSpace = cut.lastIndexOf(" ");
   return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[.,;:]$/, "")}…`;
 }
+
+/**
+ * The OpenGraph fields, built once so the page and any future route agree.
+ */
+export function openGraph(section?: string) {
+  return {
+    title: pageTitle(section),
+    description: metaDescription(),
+    url: canonicalUrl(section),
+    siteName: SITE.name,
+    type: "website" as const,
+  };
+}
