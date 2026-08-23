@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import TeamGrid from "@/components/TeamGrid";
@@ -14,6 +15,7 @@ import {
   teamCities,
 } from "@/data/team";
 import { copyrightYear } from "@/lib/dates";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { listSentence } from "@/lib/text";
 
@@ -39,6 +41,12 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-plug-black">
       <Navigation />
+      <JsonLd
+        document={breadcrumbJsonLd([
+          { label: "Home", path: "" },
+          { label: "Studio" },
+        ])}
+      />
       <main id="main">
         <PageHeader
           eyebrow="The Studio"

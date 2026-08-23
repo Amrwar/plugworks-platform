@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import { SERVICES } from "@/data/services";
 import { engagementSpan, serviceDetail, startingPrice, weekRange } from "@/data/service-details";
 import { workForService } from "@/data/work";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { metaDescription, pageTitle, pageUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -23,6 +25,12 @@ export default function ServicesIndex() {
   return (
     <div className="min-h-screen bg-plug-black">
       <Navigation />
+      <JsonLd
+        document={breadcrumbJsonLd([
+          { label: "Home", path: "" },
+          { label: "Services" },
+        ])}
+      />
       <main id="main">
         <PageHeader
           eyebrow="What We Do"

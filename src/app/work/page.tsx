@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import TestimonialWall from "@/components/TestimonialWall";
@@ -8,6 +9,7 @@ import WorkCard from "@/components/WorkCard";
 import { SERVICES } from "@/data/services";
 import { rotate } from "@/data/testimonials";
 import { orderedWork, servicesWithWork, workCities, workYears } from "@/data/work";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { listSentence } from "@/lib/text";
 
@@ -28,6 +30,12 @@ export default function WorkIndex() {
   return (
     <div className="min-h-screen bg-plug-black">
       <Navigation />
+      <JsonLd
+        document={breadcrumbJsonLd([
+          { label: "Home", path: "" },
+          { label: "Work" },
+        ])}
+      />
       <main id="main">
         <PageHeader
           eyebrow="Selected Work"

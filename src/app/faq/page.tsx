@@ -3,9 +3,11 @@ import Link from "next/link";
 
 import FaqAccordion from "@/components/FaqAccordion";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import { FAQ, faqByTopic, faqJsonLd, usedTopics } from "@/data/faq";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { slugify } from "@/lib/text";
 
@@ -23,9 +25,12 @@ export default function FaqPage() {
   return (
     <div className="min-h-screen bg-plug-black">
       <Navigation />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd()) }}
+      <JsonLd document={faqJsonLd()} />
+      <JsonLd
+        document={breadcrumbJsonLd([
+          { label: "Home", path: "" },
+          { label: "Questions" },
+        ])}
       />
       <main id="main">
         <PageHeader

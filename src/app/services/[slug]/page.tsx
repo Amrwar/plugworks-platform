@@ -3,12 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import WorkCard from "@/components/WorkCard";
 import { SERVICES } from "@/data/services";
 import { serviceDetail, startingPrice, weekRange } from "@/data/service-details";
 import { workForService } from "@/data/work";
+import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/jsonld";
 import { metaDescription, pageTitle, pageUrl } from "@/lib/seo";
 
 type PageProps = {
@@ -43,6 +45,14 @@ export default async function ServicePage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-plug-black">
       <Navigation />
+      <JsonLd document={serviceJsonLd(service)} />
+      <JsonLd
+        document={breadcrumbJsonLd([
+          { label: "Home", path: "" },
+          { label: "Services", path: "services" },
+          { label: service.title },
+        ])}
+      />
       <main id="main">
         <PageHeader
           eyebrow="Services"

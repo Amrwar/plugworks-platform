@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import { orderedProcess, processSpan } from "@/data/process";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -23,6 +25,12 @@ export default function ProcessPage() {
   return (
     <div className="min-h-screen bg-plug-black">
       <Navigation />
+      <JsonLd
+        document={breadcrumbJsonLd([
+          { label: "Home", path: "" },
+          { label: "Process" },
+        ])}
+      />
       <main id="main">
         <PageHeader
           eyebrow="How We Work"

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import WorkCard from "@/components/WorkCard";
@@ -10,6 +11,7 @@ import { PullQuote } from "@/components/TestimonialWall";
 import { testimonialForStudy } from "@/data/testimonials";
 import { CASE_STUDIES, relatedWork, workBySlug } from "@/data/work";
 import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
+import { breadcrumbJsonLd, caseStudyJsonLd } from "@/lib/jsonld";
 import { readingMinutes } from "@/lib/text";
 
 type PageProps = {
@@ -45,6 +47,14 @@ export default async function CaseStudyPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-plug-black">
       <Navigation />
+      <JsonLd document={caseStudyJsonLd(study)} />
+      <JsonLd
+        document={breadcrumbJsonLd([
+          { label: "Home", path: "" },
+          { label: "Work", path: "work" },
+          { label: study.title },
+        ])}
+      />
       <main id="main">
         <PageHeader
           eyebrow={service?.title}
