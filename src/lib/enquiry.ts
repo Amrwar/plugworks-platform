@@ -72,3 +72,20 @@ export function validateEnquiry(input: Partial<Enquiry>): EnquiryErrors {
 export function isSendable(input: Partial<Enquiry>): boolean {
   return Object.keys(validateEnquiry(input)).length === 0;
 }
+
+/**
+ * The enquiry as it should be stored or sent on.
+ *
+ * Trimming at the boundary means the rest of the system never has to wonder
+ * whether a name arrived with padding, and an unchosen service is an empty
+ * string rather than the word "undefined".
+ */
+export function normaliseEnquiry(input: Partial<Enquiry>): Enquiry {
+  return {
+    name: (input.name ?? "").trim(),
+    email: (input.email ?? "").trim(),
+    company: (input.company ?? "").trim(),
+    service: (input.service ?? "").trim(),
+    message: (input.message ?? "").trim(),
+  };
+}
