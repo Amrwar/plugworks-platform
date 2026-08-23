@@ -1,3 +1,11 @@
+/** The hero, whose three lines are set one under the other. */
+export const HERO = {
+  eyebrow: "Egypt & UAE",
+  lines: ["Where Ideas", "Are Plugged", "Into Reality"] as const,
+  /** The middle line is the one that carries the gradient. */
+  accentLine: 1,
+} as const;
+
 /** The headings each section opens with. */
 export const SECTION_COPY = {
   about: { eyebrow: "Who We Are", title: "Ideas, ", accent: "Plugged In" },
