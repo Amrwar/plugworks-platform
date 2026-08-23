@@ -10,7 +10,7 @@ import { SERVICES } from "@/data/services";
 /** The illustration for each service, keyed by its id in the data module. */
 const ICONS: Record<string, ReactNode> = {
   "brand-experiences": (
-      <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
+      <svg aria-hidden="true" viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <path d="M24 4L4 14v20l20 10 20-10V14L24 4z" stroke="currentColor" strokeWidth="2" />
         <path d="M4 14l20 10 20-10" stroke="currentColor" strokeWidth="2" />
         <path d="M24 24v20" stroke="currentColor" strokeWidth="2" />
@@ -18,14 +18,14 @@ const ICONS: Record<string, ReactNode> = {
       </svg>
   ),
   "content-production": (
-      <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
+      <svg aria-hidden="true" viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <rect x="4" y="8" width="40" height="28" rx="4" stroke="currentColor" strokeWidth="2" />
         <path d="M18 20l8 6-8 6V20z" fill="currentColor" />
         <path d="M4 36l10-8 6 4 8-6 6 4 10-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
   ),
   "event-production": (
-      <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
+      <svg aria-hidden="true" viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2" />
         <path d="M24 4v8M24 36v8M4 24h8M36 24h8" stroke="currentColor" strokeWidth="2" />
         <circle cx="24" cy="24" r="8" stroke="currentColor" strokeWidth="2" />
@@ -33,7 +33,7 @@ const ICONS: Record<string, ReactNode> = {
       </svg>
   ),
   "campaign-strategy": (
-      <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
+      <svg aria-hidden="true" viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <path d="M8 12h32v24H8z" stroke="currentColor" strokeWidth="2" />
         <path d="M12 4v8M36 4v8" stroke="currentColor" strokeWidth="2" />
         <path d="M16 20h16M16 26h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -42,13 +42,13 @@ const ICONS: Record<string, ReactNode> = {
       </svg>
   ),
   "creative-direction": (
-      <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
+      <svg aria-hidden="true" viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <path d="M24 4l6 12 14 2-10 10 2 14-12-6-12 6 2-14L4 18l14-2 6-12z" stroke="currentColor" strokeWidth="2" />
         <circle cx="24" cy="24" r="6" fill="currentColor" />
       </svg>
   ),
   "digital-experiences": (
-      <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
+      <svg aria-hidden="true" viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <rect x="4" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
         <rect x="26" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
         <rect x="4" y="26" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
@@ -118,7 +118,7 @@ export default function Services() {
 
               {/* Arrow indicator */}
               <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                <svg className={`w-6 h-6 text-${service.color}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg aria-hidden="true" className={`w-6 h-6 text-${service.color}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
@@ -133,7 +133,7 @@ export default function Services() {
             className="inline-flex items-center gap-2 font-display font-semibold text-plug-electric hover:text-plug-light transition-colors duration-300 group"
           >
             <span>Let&apos;s discuss your project</span>
-            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg aria-hidden="true" className="w-5 h-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </a>

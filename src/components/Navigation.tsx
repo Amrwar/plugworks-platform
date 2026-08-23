@@ -55,7 +55,7 @@ export default function Navigation() {
           <a href="#" className="group flex items-center gap-3">
             <div className="relative w-10 h-10">
               {/* Plug icon */}
-              <svg viewBox="0 0 40 40" className="w-full h-full">
+              <svg aria-hidden="true" viewBox="0 0 40 40" className="w-full h-full">
                 <defs>
                   <linearGradient id="plugGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#00E5FF" />
@@ -106,7 +106,7 @@ export default function Navigation() {
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
           >
-            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg aria-hidden="true" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               {isMobileMenuOpen ? (
                 <path d="M18 6L6 18M6 6l12 12" />
               ) : (

@@ -83,7 +83,7 @@ export default function About() {
                   {/* Center plug icon */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative">
-                      <svg className="w-40 h-40" viewBox="0 0 160 160">
+                      <svg aria-hidden="true" className="w-40 h-40" viewBox="0 0 160 160">
                         <defs>
                           <linearGradient id="plugIconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stopColor="#00E5FF" />
@@ -112,7 +112,7 @@ export default function About() {
               </div>
 
               {/* Decorative lines */}
-              <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 400">
+              <svg aria-hidden="true" className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 400">
                 <line x1="0" y1="200" x2="80" y2="200" stroke="#00E5FF" strokeWidth="1" strokeDasharray="4 4" />
                 <line x1="320" y1="200" x2="400" y2="200" stroke="#00E5FF" strokeWidth="1" strokeDasharray="4 4" />
                 <line x1="200" y1="0" x2="200" y2="80" stroke="#7B61FF" strokeWidth="1" strokeDasharray="4 4" />

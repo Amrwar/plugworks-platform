@@ -25,7 +25,7 @@ export default function Hero() {
       <div className="absolute inset-0 radial-glow" />
 
       {/* Floating wire/circuit elements */}
-      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 1440 900">
+      <svg aria-hidden="true" className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 1440 900">
         <defs>
           <linearGradient id="wireGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#00E5FF" stopOpacity="0" />
@@ -106,7 +106,7 @@ export default function Hero() {
           >
             <span className="flex items-center gap-2">
               Explore Services
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </span>

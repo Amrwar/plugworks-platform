@@ -32,7 +32,7 @@ export default function ComingSoonBanner() {
               {marqueeItems(PHRASE, REPEATS).map((_, i) => (
                 <div key={i} className="flex items-center gap-8">
                   <span className="flex items-center gap-2 text-plug-black font-display font-bold text-sm tracking-wider uppercase">
-                    <svg className="w-4 h-4 animate-spark" viewBox="0 0 24 24" fill="currentColor">
+                    <svg aria-hidden="true" className="w-4 h-4 animate-spark" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M13 3L4 14h7v7l9-11h-7V3z" />
                     </svg>
                     Website Launching Soon
@@ -43,7 +43,7 @@ export default function ComingSoonBanner() {
                   </span>
                   <span className="text-plug-black/60">•</span>
                   <span className="flex items-center gap-2 text-plug-black font-display font-bold text-sm tracking-wider uppercase">
-                    <svg className="w-4 h-4 animate-spark" viewBox="0 0 24 24" fill="currentColor">
+                    <svg aria-hidden="true" className="w-4 h-4 animate-spark" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M13 3L4 14h7v7l9-11h-7V3z" />
                     </svg>
                     Coming Soon
@@ -60,7 +60,7 @@ export default function ComingSoonBanner() {
             className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-plug-black/60 hover:text-plug-black transition-colors"
             aria-label="Close banner"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg aria-hidden="true" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           </button>
