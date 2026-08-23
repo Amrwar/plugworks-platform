@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
+
+import { useReveal } from "@/hooks/useReveal";
 
 import { SERVICES } from "@/data/services";
 import {
@@ -13,8 +15,7 @@ import {
 const EMPTY: Enquiry = { name: "", email: "", company: "", service: "", message: "" };
 
 export default function Contact() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(0.2);
   const [values, setValues] = useState<Enquiry>(EMPTY);
   const [errors, setErrors] = useState<EnquiryErrors>({});
   const [sent, setSent] = useState(false);
@@ -35,23 +36,6 @@ export default function Contact() {
       setValues(EMPTY);
     }
   };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <section
