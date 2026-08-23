@@ -1,5 +1,7 @@
 "use client";
 
+import { HERO } from "@/data/copy";
+
 import { useEffect, useState } from "react";
 
 export default function Hero() {
@@ -60,21 +62,24 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-plug-electric opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-plug-electric"></span>
             </span>
-            <span className="font-body text-sm text-plug-light/80">Egypt & UAE</span>
+            <span className="font-body text-sm text-plug-light/80">{HERO.eyebrow}</span>
           </span>
         </div>
 
         {/* Main Headline */}
         <h1 className={`font-display font-bold leading-[0.95] mb-8 transition-all duration-700 delay-100 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-plug-light">
-            Where Ideas
-          </span>
-          <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
-            <span className="gradient-text">Are Plugged</span>
-          </span>
-          <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-plug-light">
-            Into Reality
-          </span>
+          {HERO.lines.map((line, index) => (
+            <span
+              key={line}
+              className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-plug-light"
+            >
+              {index === HERO.accentLine ? (
+                <span className="gradient-text">{line}</span>
+              ) : (
+                line
+              )}
+            </span>
+          ))}
         </h1>
 
         {/* Subheadline */}
