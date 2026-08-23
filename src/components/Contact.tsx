@@ -1,10 +1,40 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+
+import { SERVICES } from "@/data/services";
+import {
+  OTHER_SERVICE,
+  validateEnquiry,
+  type Enquiry,
+  type EnquiryErrors,
+} from "@/lib/enquiry";
+
+const EMPTY: Enquiry = { name: "", email: "", company: "", service: "", message: "" };
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [values, setValues] = useState<Enquiry>(EMPTY);
+  const [errors, setErrors] = useState<EnquiryErrors>({});
+  const [sent, setSent] = useState(false);
+
+  const update = (field: keyof Enquiry, value: string) => {
+    setValues((current) => ({ ...current, [field]: value }));
+    // Clear a field's complaint as soon as the visitor starts fixing it,
+    // rather than leaving it shouting until the next submit.
+    setErrors((current) => ({ ...current, [field]: undefined }));
+  };
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const found = validateEnquiry(values);
+    setErrors(found);
+    if (Object.keys(found).length === 0) {
+      setSent(true);
+      setValues(EMPTY);
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -101,7 +131,7 @@ export default function Contact() {
           {/* Right - Contact form */}
           <div className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="gradient-border p-8 md:p-10">
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={onSubmit} noValidate>
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block font-body text-sm text-plug-light/60 mb-2">
@@ -110,9 +140,18 @@ export default function Contact() {
                     <input
                       type="text"
                       id="name"
+                      value={values.name}
+                      onChange={(event) => update("name", event.target.value)}
+                      aria-invalid={errors.name ? true : undefined}
+                      aria-describedby={errors.name ? "name-error" : undefined}
                       className="w-full px-4 py-3 bg-plug-black/50 border border-white/10 rounded-xl text-plug-light font-body focus:border-plug-electric focus:outline-none focus:ring-1 focus:ring-plug-electric transition-all"
                       placeholder="John Doe"
                     />
+                    {errors.name && (
+                      <p id="name-error" className="mt-2 font-body text-sm text-plug-spark">
+                        {errors.name}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="email" className="block font-body text-sm text-plug-light/60 mb-2">
@@ -121,9 +160,18 @@ export default function Contact() {
                     <input
                       type="email"
                       id="email"
+                      value={values.email}
+                      onChange={(event) => update("email", event.target.value)}
+                      aria-invalid={errors.email ? true : undefined}
+                      aria-describedby={errors.email ? "email-error" : undefined}
                       className="w-full px-4 py-3 bg-plug-black/50 border border-white/10 rounded-xl text-plug-light font-body focus:border-plug-electric focus:outline-none focus:ring-1 focus:ring-plug-electric transition-all"
                       placeholder="john@example.com"
                     />
+                    {errors.email && (
+                      <p id="email-error" className="mt-2 font-body text-sm text-plug-spark">
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -134,9 +182,18 @@ export default function Contact() {
                   <input
                     type="text"
                     id="company"
+                    value={values.company}
+                    onChange={(event) => update("company", event.target.value)}
+                    aria-invalid={errors.company ? true : undefined}
+                    aria-describedby={errors.company ? "company-error" : undefined}
                     className="w-full px-4 py-3 bg-plug-black/50 border border-white/10 rounded-xl text-plug-light font-body focus:border-plug-electric focus:outline-none focus:ring-1 focus:ring-plug-electric transition-all"
                     placeholder="Your company name"
                   />
+                  {errors.company && (
+                    <p id="company-error" className="mt-2 font-body text-sm text-plug-spark">
+                      {errors.company}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -145,17 +202,25 @@ export default function Contact() {
                   </label>
                   <select
                     id="service"
+                    value={values.service}
+                    onChange={(event) => update("service", event.target.value)}
+                    aria-invalid={errors.service ? true : undefined}
+                    aria-describedby={errors.service ? "service-error" : undefined}
                     className="w-full px-4 py-3 bg-plug-black/50 border border-white/10 rounded-xl text-plug-light font-body focus:border-plug-electric focus:outline-none focus:ring-1 focus:ring-plug-electric transition-all appearance-none cursor-pointer"
                   >
                     <option value="">Select a service</option>
-                    <option value="brand-experiences">Brand Experiences</option>
-                    <option value="content-production">Content Production</option>
-                    <option value="event-production">Event Production</option>
-                    <option value="campaign-strategy">Campaign Strategy</option>
-                    <option value="creative-direction">Creative Direction</option>
-                    <option value="digital-experiences">Digital Experiences</option>
-                    <option value="other">Something else</option>
+                    {SERVICES.map((service) => (
+                      <option key={service.id} value={service.id}>
+                        {service.title}
+                      </option>
+                    ))}
+                    <option value={OTHER_SERVICE}>Something else</option>
                   </select>
+                  {errors.service && (
+                    <p id="service-error" className="mt-2 font-body text-sm text-plug-spark">
+                      {errors.service}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -164,10 +229,19 @@ export default function Contact() {
                   </label>
                   <textarea
                     id="message"
+                    value={values.message}
+                    onChange={(event) => update("message", event.target.value)}
+                    aria-invalid={errors.message ? true : undefined}
+                    aria-describedby={errors.message ? "message-error" : undefined}
                     rows={4}
                     className="w-full px-4 py-3 bg-plug-black/50 border border-white/10 rounded-xl text-plug-light font-body focus:border-plug-electric focus:outline-none focus:ring-1 focus:ring-plug-electric transition-all resize-none"
                     placeholder="Share your vision..."
                   />
+                  {errors.message && (
+                    <p id="message-error" className="mt-2 font-body text-sm text-plug-spark">
+                      {errors.message}
+                    </p>
+                  )}
                 </div>
 
                 <button
@@ -181,6 +255,12 @@ export default function Contact() {
                     </svg>
                   </span>
                 </button>
+
+                {sent && (
+                  <p role="status" className="font-body text-sm text-plug-electric text-center">
+                    Thanks — we have your message and will be in touch shortly.
+                  </p>
+                )}
               </form>
             </div>
           </div>
