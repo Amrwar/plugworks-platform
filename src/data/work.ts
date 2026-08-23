@@ -239,10 +239,10 @@ export function relatedWork(slug: string, limit = 2): CaseStudy[] {
 
 /** The years the studio has work from, newest first. */
 export function workYears(): number[] {
-  return [...new Set(CASE_STUDIES.map((s) => s.year))].sort((a, b) => b - a);
+  return Array.from(new Set(CASE_STUDIES.map((s) => s.year))).sort((a, b) => b - a);
 }
 
 /** The cities the studio has worked in, alphabetically. */
 export function workCities(): string[] {
-  return [...new Set(CASE_STUDIES.map((s) => s.city))].sort();
+  return Array.from(new Set(CASE_STUDIES.map((s) => s.city))).sort();
 }
