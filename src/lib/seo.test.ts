@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { SITE } from "@/data/site";
-import { canonicalUrl, metaDescription, pageTitle } from "./seo";
+import { canonicalUrl, metaDescription, openGraph, pageTitle } from "./seo";
 
 describe("the page title", () => {
   it("uses the tagline when no section is named", () => {
@@ -59,5 +59,33 @@ describe("the meta description", () => {
 
   it("collapses runs of whitespace", () => {
     expect(metaDescription("one    two\n\nthree", 160)).toBe("one two three");
+  });
+});
+
+describe("the OpenGraph fields", () => {
+  it("agrees with the page title", () => {
+    expect(openGraph().title).toBe(pageTitle());
+  });
+
+  it("agrees with the canonical url", () => {
+    expect(openGraph().url).toBe(canonicalUrl());
+  });
+
+  it("agrees with the meta description", () => {
+    expect(openGraph().description).toBe(metaDescription());
+  });
+
+  it("names the site", () => {
+    expect(openGraph().siteName).toBe(SITE.name);
+  });
+
+  it("follows a section through to the title and url", () => {
+    const og = openGraph("Services");
+    expect(og.title).toBe(pageTitle("Services"));
+    expect(og.url).toBe(canonicalUrl("Services"));
+  });
+
+  it("is always a website", () => {
+    expect(openGraph().type).toBe("website");
   });
 });
