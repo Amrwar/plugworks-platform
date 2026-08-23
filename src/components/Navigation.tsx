@@ -1,11 +1,22 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
-import { NAV_LINKS, navSectionIds } from "@/data/navigation";
+import {
+  NAV_LINKS,
+  PAGE_LINKS,
+  isCurrentPage,
+  isHome,
+  navSectionIds,
+  resolveHref,
+} from "@/data/navigation";
 import { activeSection } from "@/lib/sections";
 
 export default function Navigation() {
+  const pathname = usePathname() ?? "/";
+  const onHome = isHome(pathname);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -13,6 +24,11 @@ export default function Navigation() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      // Only the home page has the sections; elsewhere there is nothing to spy on.
+      if (!onHome) {
+        setActive(null);
+        return;
+      }
       // Measure on every scroll rather than once on mount: the sections move
       // as images load and as the layout reflows on resize.
       const tops = navSectionIds()
@@ -30,7 +46,7 @@ export default function Navigation() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
-  }, []);
+  }, [onHome]);
 
   useEffect(() => {
     if (!isMobileMenuOpen) return;
@@ -40,6 +56,11 @@ export default function Navigation() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isMobileMenuOpen]);
+
+  // On the home page the header is a table of contents for the sections in
+  // front of you; on every other page it has to be the site's navigation.
+  const desktopLinks = onHome ? NAV_LINKS : PAGE_LINKS;
+  const mobileLinks = onHome ? [...PAGE_LINKS, ...NAV_LINKS] : PAGE_LINKS;
 
   return (
     <nav
@@ -53,7 +74,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="group flex items-center gap-3">
+          <Link href="/" aria-label="Plugworks, home" className="group flex items-center gap-3">
             <div className="relative w-10 h-10">
               {/* Plug icon */}
               <svg aria-hidden="true" viewBox="0 0 40 40" className="w-full h-full">
@@ -76,27 +97,31 @@ export default function Navigation() {
               <span className="text-plug-light">PLUG</span>
               <span className="gradient-text">WORKS</span>
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <a
+            {desktopLinks.map((link) => (
+              <Link
                 key={link.name}
-                href={link.href}
-                aria-current={active === link.href.slice(1) ? "true" : undefined}
+                href={resolveHref(link.href, pathname)}
+                aria-current={
+                  active === link.href.slice(1) || isCurrentPage(link.href, pathname)
+                    ? "page"
+                    : undefined
+                }
                 className="relative font-body text-sm text-plug-light/70 hover:text-plug-light transition-colors duration-300 group aria-[current]:text-plug-light"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-plug-electric to-plug-glow group-hover:w-full transition-all duration-300" />
-              </a>
+              </Link>
             ))}
-            <a
-              href="#contact"
+            <Link
+              href={resolveHref("#contact", pathname)}
               className="btn-electric px-6 py-2.5 bg-gradient-to-r from-plug-electric to-plug-glow text-plug-black font-display font-semibold text-sm rounded-full hover:shadow-lg hover:shadow-plug-electric/30 transition-all duration-300"
             >
               Let&apos;s Talk
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -124,23 +149,24 @@ export default function Navigation() {
             className="md:hidden absolute top-full left-0 right-0 bg-plug-dark/95 backdrop-blur-xl border-b border-white/5 animate-slide-up"
           >
             <div className="px-6 py-8 space-y-6">
-              {NAV_LINKS.map((link) => (
-                <a
+              {mobileLinks.map((link) => (
+                <Link
                   key={link.name}
-                  href={link.href}
+                  href={resolveHref(link.href, pathname)}
                   onClick={() => setIsMobileMenuOpen(false)}
+                  aria-current={isCurrentPage(link.href, pathname) ? "page" : undefined}
                   className="block font-display text-2xl text-plug-light hover:text-plug-electric transition-colors"
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
+              <Link
+                href={resolveHref("#contact", pathname)}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="inline-block btn-electric px-8 py-3 bg-gradient-to-r from-plug-electric to-plug-glow text-plug-black font-display font-semibold rounded-full"
               >
                 Let&apos;s Talk
-              </a>
+              </Link>
             </div>
           </div>
         )}

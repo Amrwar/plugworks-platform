@@ -1,8 +1,11 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
-import { NAV_LINKS } from "@/data/navigation";
+import { NAV_LINKS, PAGE_LINKS, resolveHref } from "@/data/navigation";
+import { SERVICES } from "@/data/services";
 import SocialLinks from "@/components/SocialLinks";
 import { copyrightLine } from "@/lib/dates";
 import { SITE } from "@/data/site";
@@ -32,6 +35,7 @@ const SOCIAL_ICONS: Record<string, ReactNode> = {
 };
 
 export default function Footer() {
+  const pathname = usePathname() ?? "/";
   return (
     <footer className="relative py-16 border-t border-white/5">
       {/* Background */}
@@ -41,7 +45,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="md:col-span-2">
-            <a href="#" className="inline-flex items-center gap-3 mb-6">
+            <Link href="/" aria-label="Plugworks, home" className="inline-flex items-center gap-3 mb-6">
               <div className="w-10 h-10">
                 <svg aria-hidden="true" viewBox="0 0 40 40" className="w-full h-full">
                   <defs>
@@ -61,7 +65,7 @@ export default function Footer() {
                 <span className="text-plug-light">PLUG</span>
                 <span className="gradient-text">WORKS</span>
               </span>
-            </a>
+            </Link>
             <p className="font-body text-plug-light/50 max-w-md leading-relaxed">
               Where ideas are plugged into real experiences. A creative and production 
               house based in Egypt and UAE, turning bold concepts into unforgettable moments.
@@ -73,15 +77,15 @@ export default function Footer() {
             <h4 className="font-display font-semibold text-plug-light mb-6">Quick Links</h4>
             <nav aria-label="Footer">
               <ul className="space-y-3">
-                {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="font-body text-plug-light/50 hover:text-plug-electric transition-colors duration-300"
-                  >
-                    {link.name}
-                  </a>
-                </li>
+                {[...PAGE_LINKS, ...NAV_LINKS].map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={resolveHref(link.href, pathname)}
+                      className="font-body text-plug-light/50 hover:text-plug-electric transition-colors duration-300"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </nav>
@@ -91,14 +95,14 @@ export default function Footer() {
           <div>
             <h4 className="font-display font-semibold text-plug-light mb-6">Services</h4>
             <ul className="space-y-3">
-              {["Brand Experiences", "Content Production", "Event Production", "Digital Experiences"].map((service) => (
-                <li key={service}>
-                  <a
-                    href="#services"
+              {SERVICES.map((service) => (
+                <li key={service.id}>
+                  <Link
+                    href={`/services/${service.id}`}
                     className="font-body text-plug-light/50 hover:text-plug-electric transition-colors duration-300"
                   >
-                    {service}
-                  </a>
+                    {service.title}
+                  </Link>
                 </li>
               ))}
             </ul>
