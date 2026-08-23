@@ -24,3 +24,42 @@ export const NAV_LINKS: readonly NavLink[] = [
 export function navSectionIds(links: readonly NavLink[] = NAV_LINKS): string[] {
   return links.map((link) => link.href.replace(/^#/, ""));
 }
+
+/**
+ * The pages that have a route of their own.
+ *
+ * Kept apart from `NAV_LINKS` because the two behave differently: a section
+ * link scrolls when you are already on the home page and has to jump back to
+ * it when you are not, while a page link is always just a page.
+ */
+export const PAGE_LINKS: readonly NavLink[] = [
+  { name: "Work", href: "/work" },
+  { name: "Services", href: "/services" },
+  { name: "Process", href: "/process" },
+  { name: "Studio", href: "/about" },
+  { name: "Questions", href: "/faq" },
+] as const;
+
+/** Whether a path is the home page, allowing for a trailing slash. */
+export function isHome(pathname: string): boolean {
+  return pathname === "/" || pathname === "";
+}
+
+/**
+ * Where a link should actually point from the page you are on.
+ *
+ * A section anchor only works on the home page; from anywhere else it has to
+ * carry the path with it, or the browser looks for a section that is not in
+ * the document and does nothing at all.
+ */
+export function resolveHref(href: string, pathname: string): string {
+  if (!href.startsWith("#")) return href;
+  return isHome(pathname) ? href : `/${href}`;
+}
+
+/** Whether a page link is the page currently being shown. */
+export function isCurrentPage(href: string, pathname: string): boolean {
+  if (href.startsWith("#")) return false;
+  const clean = (value: string) => value.replace(/\/+$/, "") || "/";
+  return clean(href) === clean(pathname);
+}
