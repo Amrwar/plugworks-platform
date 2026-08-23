@@ -9,15 +9,19 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-plug-black relative">
+    <div className="min-h-screen bg-plug-black relative">
       <ComingSoonBanner />
       <Navigation />
-      <Hero />
-      <About />
-      <Services />
-      <Locations />
-      <Contact />
+      {/* The banner, the nav and the footer are their own landmarks; only the
+          sections belong inside main. */}
+      <main id="main">
+        <Hero />
+        <About />
+        <Services />
+        <Locations />
+        <Contact />
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 }
