@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from "react";
 
+import { marqueeItems } from "@/lib/marquee";
+
+/** The phrase the banner scrolls, and how many copies cover a wide screen. */
+const PHRASE = "Website Launching Soon";
+const REPEATS = 4;
+
 export default function ComingSoonBanner() {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -23,7 +29,7 @@ export default function ComingSoonBanner() {
         <div className="relative py-3 px-4">
           <div className="flex items-center justify-center gap-8 overflow-hidden">
             <div className="flex animate-marquee whitespace-nowrap gap-8">
-              {[...Array(4)].map((_, i) => (
+              {marqueeItems(PHRASE, REPEATS).map((_, i) => (
                 <div key={i} className="flex items-center gap-8">
                   <span className="flex items-center gap-2 text-plug-black font-display font-bold text-sm tracking-wider uppercase">
                     <svg className="w-4 h-4 animate-spark" viewBox="0 0 24 24" fill="currentColor">
