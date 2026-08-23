@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
+
+import { useReveal } from "@/hooks/useReveal";
+
 
 import { SERVICES } from "@/data/services";
 
@@ -56,25 +59,7 @@ const ICONS: Record<string, ReactNode> = {
 };
 
 export default function Services() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(0.1);
 
   return (
     <section
