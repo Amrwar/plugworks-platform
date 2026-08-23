@@ -1,30 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useReveal } from "@/hooks/useReveal";
+
 
 import { LOCATIONS } from "@/data/locations";
 
 
 export default function Locations() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, isVisible } = useReveal<HTMLElement>(0.2);
 
   return (
     <section
