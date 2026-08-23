@@ -65,6 +65,7 @@ export default function Services() {
     <section
       ref={sectionRef}
       id="services"
+      aria-labelledby="services-heading"
       className="relative py-32 overflow-hidden"
     >
       {/* Background elements */}
@@ -77,7 +78,9 @@ export default function Services() {
           <span className="inline-block font-display text-sm text-plug-electric uppercase tracking-[0.3em] mb-4">
             What We Do
           </span>
-          <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-plug-light mb-6">
+          <h2
+ id="services-heading"
+ className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-plug-light mb-6">
             Services That
             <span className="gradient-text"> Spark</span>
           </h2>
