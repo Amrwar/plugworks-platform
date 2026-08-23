@@ -203,3 +203,9 @@ body {
 .blur-glow {
   filter: blur(80px);
 }
+
+/* An in-page jump should not land the heading under the fixed header. */
+:target,
+section[id] {
+  scroll-margin-top: 7rem;
+}
