@@ -1,3 +1,4 @@
+import { JOURNAL } from "./journal";
 import { CASE_STUDIES } from "./work";
 import { SERVICES } from "./services";
 
@@ -26,6 +27,7 @@ export const STATIC_ROUTES: readonly SiteRoute[] = [
   { path: "services", label: "Services", changeFrequency: "monthly", priority: 0.8 },
   { path: "process", label: "Process", changeFrequency: "yearly", priority: 0.7 },
   { path: "about", label: "Studio", changeFrequency: "yearly", priority: 0.7 },
+  { path: "journal", label: "Journal", changeFrequency: "weekly", priority: 0.6 },
   { path: "faq", label: "Questions", changeFrequency: "monthly", priority: 0.6 },
 ] as const;
 
@@ -51,9 +53,21 @@ export function serviceRoutes(): SiteRoute[] {
   }));
 }
 
+/** One route per journal note, newest first. */
+export function journalRoutes(): SiteRoute[] {
+  return [...JOURNAL]
+    .sort((a, b) => (a.published === b.published ? 0 : a.published < b.published ? 1 : -1))
+    .map((entry) => ({
+      path: `journal/${entry.slug}`,
+      label: entry.title,
+      changeFrequency: "yearly" as const,
+      priority: 0.4,
+    }));
+}
+
 /** Every page the site serves, fixed pages first. */
 export function allRoutes(): SiteRoute[] {
-  return [...STATIC_ROUTES, ...serviceRoutes(), ...workRoutes()];
+  return [...STATIC_ROUTES, ...serviceRoutes(), ...workRoutes(), ...journalRoutes()];
 }
 
 /** The path with its leading slash, which is what an `href` wants. */

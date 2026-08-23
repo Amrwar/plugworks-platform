@@ -37,6 +37,7 @@ export const PAGE_LINKS: readonly NavLink[] = [
   { name: "Services", href: "/services" },
   { name: "Process", href: "/process" },
   { name: "Studio", href: "/about" },
+  { name: "Journal", href: "/journal" },
   { name: "Questions", href: "/faq" },
 ] as const;
 

@@ -5,9 +5,11 @@ import {
   allRoutes,
   href,
   isKnownRoute,
+  journalRoutes,
   serviceRoutes,
   workRoutes,
 } from "./routes";
+import { JOURNAL } from "./journal";
 import { CASE_STUDIES } from "./work";
 import { SERVICES } from "./services";
 
@@ -87,9 +89,9 @@ describe("serviceRoutes", () => {
 });
 
 describe("allRoutes", () => {
-  it("covers the fixed pages and both generated sets", () => {
+  it("covers the fixed pages and every generated set", () => {
     expect(allRoutes()).toHaveLength(
-      STATIC_ROUTES.length + SERVICES.length + CASE_STUDIES.length
+      STATIC_ROUTES.length + SERVICES.length + CASE_STUDIES.length + JOURNAL.length
     );
   });
 
@@ -140,5 +142,37 @@ describe("isKnownRoute", () => {
 
   it("rejects a page the site does not serve", () => {
     expect(isKnownRoute("/careers")).toBe(false);
+  });
+});
+
+describe("journalRoutes", () => {
+  it("produces one route per note", () => {
+    expect(journalRoutes()).toHaveLength(JOURNAL.length);
+  });
+
+  it("puts the newest note first", () => {
+    const dates = journalRoutes().map(
+      (route) => JOURNAL.find((entry) => `journal/${entry.slug}` === route.path)?.published ?? ""
+    );
+    expect(dates).toEqual([...dates].sort().reverse());
+  });
+
+  it("files every note under the journal path", () => {
+    for (const route of journalRoutes()) {
+      expect(route.path.startsWith("journal/")).toBe(true);
+    }
+  });
+
+  it("uses the note title as the label", () => {
+    const labels = journalRoutes().map((route) => route.label);
+    for (const entry of JOURNAL) {
+      expect(labels).toContain(entry.title);
+    }
+  });
+
+  it("is reachable through isKnownRoute", () => {
+    for (const route of journalRoutes()) {
+      expect(isKnownRoute(`/${route.path}`)).toBe(true);
+    }
   });
 });
