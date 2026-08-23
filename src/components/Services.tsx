@@ -1,48 +1,35 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
-const services = [
-  {
-    icon: (
+import { SERVICES } from "@/data/services";
+
+/** The illustration for each service, keyed by its id in the data module. */
+const ICONS: Record<string, ReactNode> = {
+  "brand-experiences": (
       <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <path d="M24 4L4 14v20l20 10 20-10V14L24 4z" stroke="currentColor" strokeWidth="2" />
         <path d="M4 14l20 10 20-10" stroke="currentColor" strokeWidth="2" />
         <path d="M24 24v20" stroke="currentColor" strokeWidth="2" />
         <circle cx="24" cy="14" r="4" fill="currentColor" />
       </svg>
-    ),
-    title: "Brand Experiences",
-    description: "Immersive activations and experiential marketing that connect brands with audiences in unforgettable ways.",
-    color: "plug-electric",
-  },
-  {
-    icon: (
+  ),
+  "content-production": (
       <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <rect x="4" y="8" width="40" height="28" rx="4" stroke="currentColor" strokeWidth="2" />
         <path d="M18 20l8 6-8 6V20z" fill="currentColor" />
         <path d="M4 36l10-8 6 4 8-6 6 4 10-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
-    ),
-    title: "Content Production",
-    description: "From concept to final cut—commercials, brand films, social content, and everything in between.",
-    color: "plug-spark",
-  },
-  {
-    icon: (
+  ),
+  "event-production": (
       <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2" />
         <path d="M24 4v8M24 36v8M4 24h8M36 24h8" stroke="currentColor" strokeWidth="2" />
         <circle cx="24" cy="24" r="8" stroke="currentColor" strokeWidth="2" />
         <circle cx="24" cy="24" r="3" fill="currentColor" />
       </svg>
-    ),
-    title: "Event Production",
-    description: "End-to-end event management from intimate gatherings to large-scale spectacles that leave lasting impressions.",
-    color: "plug-glow",
-  },
-  {
-    icon: (
+  ),
+  "campaign-strategy": (
       <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <path d="M8 12h32v24H8z" stroke="currentColor" strokeWidth="2" />
         <path d="M12 4v8M36 4v8" stroke="currentColor" strokeWidth="2" />
@@ -50,24 +37,14 @@ const services = [
         <circle cx="36" cy="32" r="8" stroke="currentColor" strokeWidth="2" />
         <path d="M36 28v4l3 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
-    ),
-    title: "Campaign Strategy",
-    description: "Data-driven creative strategies that amplify your message and drive measurable results.",
-    color: "plug-electric",
-  },
-  {
-    icon: (
+  ),
+  "creative-direction": (
       <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <path d="M24 4l6 12 14 2-10 10 2 14-12-6-12 6 2-14L4 18l14-2 6-12z" stroke="currentColor" strokeWidth="2" />
         <circle cx="24" cy="24" r="6" fill="currentColor" />
       </svg>
-    ),
-    title: "Creative Direction",
-    description: "Visionary leadership that shapes brand aesthetics and ensures cohesive storytelling across all touchpoints.",
-    color: "plug-spark",
-  },
-  {
-    icon: (
+  ),
+  "digital-experiences": (
       <svg viewBox="0 0 48 48" className="w-12 h-12" fill="none">
         <rect x="4" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
         <rect x="26" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
@@ -75,12 +52,8 @@ const services = [
         <path d="M26 26h18v18H26z" stroke="currentColor" strokeWidth="2" />
         <path d="M35 31v8M31 35h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
-    ),
-    title: "Digital Experiences",
-    description: "Interactive digital solutions, AR/VR experiences, and innovative tech integrations that push boundaries.",
-    color: "plug-glow",
-  },
-];
+  ),
+};
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -131,7 +104,7 @@ export default function Services() {
 
         {/* Services grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
+          {SERVICES.map((service, index) => (
             <div
               key={index}
               className={`group relative p-8 bg-plug-dark/50 backdrop-blur-sm border border-white/5 rounded-2xl hover:border-${service.color}/30 transition-all duration-500 hover:-translate-y-2 ${
@@ -144,7 +117,7 @@ export default function Services() {
               
               {/* Icon */}
               <div className={`relative text-${service.color} mb-6 transition-transform duration-300 group-hover:scale-110`}>
-                {service.icon}
+                {ICONS[service.id]}
               </div>
 
               {/* Content */}
