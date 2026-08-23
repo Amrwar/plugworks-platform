@@ -209,3 +209,10 @@ body {
 section[id] {
   scroll-margin-top: 7rem;
 }
+
+/* A visible focus ring for keyboard users, without one on mouse clicks. */
+:focus-visible {
+  outline: 2px solid theme("colors.plug-electric", #22d3ee);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
