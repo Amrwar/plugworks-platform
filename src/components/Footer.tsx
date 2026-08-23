@@ -1,5 +1,7 @@
 "use client";
 
+import { NAV_LINKS } from "@/data/navigation";
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -43,13 +45,13 @@ export default function Footer() {
           <div>
             <h4 className="font-display font-semibold text-plug-light mb-6">Quick Links</h4>
             <ul className="space-y-3">
-              {["About", "Services", "Locations", "Contact"].map((link) => (
-                <li key={link}>
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
                   <a
-                    href={`#${link.toLowerCase()}`}
+                    href={link.href}
                     className="font-body text-plug-light/50 hover:text-plug-electric transition-colors duration-300"
                   >
-                    {link}
+                    {link.name}
                   </a>
                 </li>
               ))}
