@@ -14,7 +14,7 @@ import {
   teamCities,
 } from "@/data/team";
 import { copyrightYear } from "@/lib/dates";
-import { canonicalUrl, metaDescription, pageTitle } from "@/lib/seo";
+import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { listSentence } from "@/lib/text";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description: metaDescription(
     "Who Plugworks is: a Cairo and Dubai studio of creatives, producers and strategists, and how the work gets divided between them."
   ),
-  alternates: { canonical: canonicalUrl("about") },
+  alternates: { canonical: pageUrl("about") },
 };
 
 /** How each side of the studio describes itself, in its own words. */

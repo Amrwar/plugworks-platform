@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import { FAQ, faqByTopic, faqJsonLd, usedTopics } from "@/data/faq";
-import { canonicalUrl, metaDescription, pageTitle } from "@/lib/seo";
+import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { slugify } from "@/lib/text";
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: metaDescription(
     "The questions people ask Plugworks before they get in touch: how we scope, what we cost, and what happens when a project goes sideways."
   ),
-  alternates: { canonical: canonicalUrl("faq") },
+  alternates: { canonical: pageUrl("faq") },
 };
 
 export default function FaqPage() {

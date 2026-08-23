@@ -6,7 +6,7 @@ import PageHeader from "@/components/PageHeader";
 import WorkCard from "@/components/WorkCard";
 import { SERVICES } from "@/data/services";
 import { orderedWork, servicesWithWork, workCities, workYears } from "@/data/work";
-import { canonicalUrl, metaDescription, pageTitle } from "@/lib/seo";
+import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { listSentence } from "@/lib/text";
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: metaDescription(
     "Case studies from Plugworks: brand experiences, films, events and digital work made in Cairo and Dubai."
   ),
-  alternates: { canonical: canonicalUrl("work") },
+  alternates: { canonical: pageUrl("work") },
 };
 
 export default function WorkIndex() {

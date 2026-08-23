@@ -6,14 +6,14 @@ import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import { orderedProcess, processSpan } from "@/data/process";
-import { canonicalUrl, metaDescription, pageTitle } from "@/lib/seo";
+import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: pageTitle("Process"),
   description: metaDescription(
     "How a Plugworks project runs, step by step: what happens, roughly how long it takes, and what you have in your hands at the end of each stage."
   ),
-  alternates: { canonical: canonicalUrl("process") },
+  alternates: { canonical: pageUrl("process") },
 };
 
 export default function ProcessPage() {

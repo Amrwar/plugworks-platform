@@ -7,7 +7,7 @@ import PageHeader from "@/components/PageHeader";
 import WorkCard from "@/components/WorkCard";
 import { SERVICES } from "@/data/services";
 import { CASE_STUDIES, relatedWork, workBySlug } from "@/data/work";
-import { canonicalUrl, metaDescription, pageTitle } from "@/lib/seo";
+import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { readingMinutes } from "@/lib/text";
 
 type PageProps = {
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: pageTitle(study.title),
     description: metaDescription(study.summary),
-    alternates: { canonical: canonicalUrl(`work/${study.slug}`) },
+    alternates: { canonical: pageUrl(`work/${study.slug}`) },
   };
 }
 

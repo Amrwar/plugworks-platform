@@ -1,14 +1,18 @@
 import type { MetadataRoute } from "next";
 
-import { SITE } from "@/data/site";
+import { allRoutes } from "@/data/routes";
+import { pageUrl } from "@/lib/seo";
 
-/** One entry: this is a single-page site. */
+/**
+ * Every page the site serves.
+ *
+ * The list is derived from `routes.ts`, so a new case study or service shows
+ * up here the moment its data lands — there is no second list to forget.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: SITE.url,
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-  ];
+  return allRoutes().map((route) => ({
+    url: pageUrl(route.path),
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+  }));
 }
