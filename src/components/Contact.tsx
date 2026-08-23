@@ -127,6 +127,7 @@ export default function Contact() {
                     <input
                       type="text"
                       id="name"
+                    autoComplete="name"
                       value={values.name}
                       onChange={(event) => update("name", event.target.value)}
                       aria-invalid={errors.name ? true : undefined}
@@ -147,6 +148,7 @@ export default function Contact() {
                     <input
                       type="email"
                       id="email"
+                    autoComplete="email"
                       value={values.email}
                       onChange={(event) => update("email", event.target.value)}
                       aria-invalid={errors.email ? true : undefined}
@@ -169,6 +171,7 @@ export default function Contact() {
                   <input
                     type="text"
                     id="company"
+                    autoComplete="organization"
                     value={values.company}
                     onChange={(event) => update("company", event.target.value)}
                     aria-invalid={errors.company ? true : undefined}
