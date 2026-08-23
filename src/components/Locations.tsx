@@ -2,22 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const locations = [
-  {
-    country: "Egypt",
-    city: "Cairo",
-    description: "Our creative hub in the heart of the Middle East, where ancient inspiration meets modern innovation.",
-    image: "🇪🇬",
-    accent: "plug-spark",
-  },
-  {
-    country: "UAE",
-    city: "Dubai",
-    description: "Our production powerhouse in the city of the future, connecting brands to global audiences.",
-    image: "🇦🇪",
-    accent: "plug-electric",
-  },
-];
+import { LOCATIONS } from "@/data/locations";
+
 
 export default function Locations() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -83,7 +69,7 @@ export default function Locations() {
 
         {/* Locations cards */}
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-          {locations.map((location, index) => (
+          {LOCATIONS.map((location, index) => (
             <div
               key={index}
               className={`group relative transition-all duration-700 ${
@@ -100,7 +86,7 @@ export default function Locations() {
                   {/* Flag and location */}
                   <div className="flex items-start justify-between mb-8">
                     <div>
-                      <span className="text-6xl mb-4 block">{location.image}</span>
+                      <span className="text-6xl mb-4 block">{location.flag}</span>
                       <h3 className="font-display font-bold text-3xl text-plug-light">
                         {location.country}
                       </h3>
