@@ -12,6 +12,14 @@ export type Enquiry = {
 /** A per-field complaint, keyed by field name. Empty means the form is good. */
 export type EnquiryErrors = Partial<Record<keyof Enquiry, string>>;
 
+/** The choice for work that does not fit the service list. */
+export const OTHER_SERVICE = "other";
+
+/** Every value the service picker may carry, including the empty default. */
+export function serviceChoices(): string[] {
+  return ["", ...SERVICES.map((s) => s.id), OTHER_SERVICE];
+}
+
 /** The shortest message worth sending to a studio. */
 export const MIN_MESSAGE = 20;
 
@@ -50,7 +58,7 @@ export function validateEnquiry(input: Partial<Enquiry>): EnquiryErrors {
   if (name === "") errors.name = "Please tell us your name.";
   if (email === "") errors.email = "Please add an email address.";
   else if (!looksLikeEmail(email)) errors.email = "That email address looks wrong.";
-  if (service !== "" && !SERVICES.some((s) => s.id === service)) {
+  if (service !== "" && service !== OTHER_SERVICE && !SERVICES.some((s) => s.id === service)) {
     errors.service = "Please pick one of our services.";
   }
   if (message === "") errors.message = "Please tell us about the project.";

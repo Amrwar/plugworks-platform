@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { isSendable, looksLikeEmail, MIN_MESSAGE, validateEnquiry } from "./enquiry";
+import {
+  isSendable,
+  looksLikeEmail,
+  MIN_MESSAGE,
+  OTHER_SERVICE,
+  serviceChoices,
+  validateEnquiry,
+} from "./enquiry";
 
 const good = {
   name: "Nadia",
@@ -119,6 +126,29 @@ describe("reading the enquiry form", () => {
 
   it("treats a missing field and an absent key the same way", () => {
     expect(validateEnquiry({})).toEqual(validateEnquiry({ name: "", email: "", message: "" }));
+  });
+
+  it("accepts the catch-all choice for work that fits no service", () => {
+    expect(validateEnquiry({ ...good, service: OTHER_SERVICE }).service).toBeUndefined();
+  });
+
+  it("offers the empty default, every service and the catch-all", () => {
+    expect(serviceChoices()).toEqual([
+      "",
+      "brand-experiences",
+      "content-production",
+      "event-production",
+      "campaign-strategy",
+      "creative-direction",
+      "digital-experiences",
+      OTHER_SERVICE,
+    ]);
+  });
+
+  it("accepts every choice the picker can offer", () => {
+    for (const choice of serviceChoices()) {
+      expect(validateEnquiry({ ...good, service: choice }).service).toBeUndefined();
+    }
   });
 
   it("says the form is not sendable while anything is wrong", () => {
