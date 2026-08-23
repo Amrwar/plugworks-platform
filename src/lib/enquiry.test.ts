@@ -142,8 +142,7 @@ describe("reading the enquiry form", () => {
       "campaign-strategy",
       "creative-direction",
       "digital-experiences",
-      normaliseEnquiry,
-  OTHER_SERVICE,
+      OTHER_SERVICE,
     ]);
   });
 
