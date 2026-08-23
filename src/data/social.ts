@@ -18,5 +18,5 @@ export const SOCIAL_LINKS: readonly SocialLink[] = [
   { id: "instagram", label: "Plugworks on Instagram", href: "https://instagram.com/plugworks" },
   { id: "linkedin", label: "Plugworks on LinkedIn", href: "https://linkedin.com/company/plugworks" },
   { id: "behance", label: "Plugworks on Behance", href: "https://behance.net/plugworks" },
-  { id: "youtube", label: "Plugworks on YouTube", href: "https://youtube.com/@plugworks" },
+  { id: "x", label: "Plugworks on X", href: "https://x.com/plugworks" },
 ] as const;
