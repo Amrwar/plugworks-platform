@@ -6,6 +6,8 @@ import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import WorkCard from "@/components/WorkCard";
 import { SERVICES } from "@/data/services";
+import { PullQuote } from "@/components/TestimonialWall";
+import { testimonialForStudy } from "@/data/testimonials";
 import { CASE_STUDIES, relatedWork, workBySlug } from "@/data/work";
 import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { readingMinutes } from "@/lib/text";
@@ -38,6 +40,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const service = SERVICES.find((entry) => entry.id === study.serviceId);
   const minutes = readingMinutes(study.story);
   const related = relatedWork(study.slug, 2);
+  const quote = testimonialForStudy(study.slug);
 
   return (
     <div className="min-h-screen bg-plug-black">
@@ -132,6 +135,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </dl>
           </div>
         </section>
+
+        {quote ? (
+          <section aria-labelledby="quote-heading" className="py-20">
+            <h2 id="quote-heading" className="sr-only">
+              What the client said
+            </h2>
+            <div className="mx-auto max-w-7xl px-6 lg:px-12">
+              <PullQuote entry={quote} />
+            </div>
+          </section>
+        ) : null}
 
         <section aria-labelledby="credits-heading" className="py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">

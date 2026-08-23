@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
+import TestimonialWall from "@/components/TestimonialWall";
 import WorkCard from "@/components/WorkCard";
 import { SERVICES } from "@/data/services";
+import { rotate } from "@/data/testimonials";
 import { orderedWork, servicesWithWork, workCities, workYears } from "@/data/work";
 import { pageUrl, metaDescription, pageTitle } from "@/lib/seo";
 import { listSentence } from "@/lib/text";
@@ -82,6 +84,20 @@ export default function WorkIndex() {
                 <WorkCard key={study.slug} study={study} wide={study.featured} />
               ))}
             </div>
+          </div>
+        </section>
+        <section
+          aria-labelledby="said-heading"
+          className="border-t border-white/5 bg-plug-dark/30 py-20"
+        >
+          <div className="mx-auto max-w-7xl px-6 lg:px-12">
+            <h2
+              id="said-heading"
+              className="mb-10 font-display text-2xl font-bold text-plug-light"
+            >
+              What the clients said afterwards
+            </h2>
+            <TestimonialWall entries={rotate(4)} />
           </div>
         </section>
       </main>
