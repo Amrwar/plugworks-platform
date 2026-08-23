@@ -3,6 +3,7 @@ import {
   isSendable,
   looksLikeEmail,
   MIN_MESSAGE,
+  normaliseEnquiry,
   OTHER_SERVICE,
   serviceChoices,
   validateEnquiry,
@@ -141,7 +142,8 @@ describe("reading the enquiry form", () => {
       "campaign-strategy",
       "creative-direction",
       "digital-experiences",
-      OTHER_SERVICE,
+      normaliseEnquiry,
+  OTHER_SERVICE,
     ]);
   });
 
@@ -153,5 +155,40 @@ describe("reading the enquiry form", () => {
 
   it("says the form is not sendable while anything is wrong", () => {
     expect(isSendable({ ...good, email: "nope" })).toBe(false);
+  });
+});
+
+describe("normalising an enquiry", () => {
+  it("trims every field", () => {
+    expect(
+      normaliseEnquiry({ name: "  Nadia  ", email: " nadia@example.com ", message: "  hello  " })
+    ).toEqual({ name: "Nadia", email: "nadia@example.com", company: "", service: "", message: "hello" });
+  });
+
+  it("turns a missing field into an empty string", () => {
+    expect(normaliseEnquiry({})).toEqual({
+      name: "",
+      email: "",
+      company: "",
+      service: "",
+      message: "",
+    });
+  });
+
+  it("leaves an already-clean enquiry alone", () => {
+    const clean = {
+      name: "Nadia",
+      email: "nadia@example.com",
+      company: "Northwind",
+      service: "other",
+      message: "A long enough message to pass.",
+    };
+    expect(normaliseEnquiry(clean)).toEqual(clean);
+  });
+
+  it("agrees with the validator about what is empty", () => {
+    const padded = { name: "   ", email: "  ", message: "  " };
+    expect(Object.keys(validateEnquiry(padded)).sort()).toEqual(["email", "message", "name"]);
+    expect(normaliseEnquiry(padded).name).toBe("");
   });
 });
