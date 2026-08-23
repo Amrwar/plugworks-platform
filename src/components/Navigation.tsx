@@ -2,19 +2,44 @@
 
 import { useState, useEffect } from "react";
 
-import { NAV_LINKS } from "@/data/navigation";
+import { NAV_LINKS, navSectionIds } from "@/data/navigation";
+import { activeSection } from "@/lib/sections";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      // Measure on every scroll rather than once on mount: the sections move
+      // as images load and as the layout reflows on resize.
+      const tops = navSectionIds()
+        .map((id) => {
+          const element = document.getElementById(id);
+          return element ? { id, top: element.offsetTop - 120 } : null;
+        })
+        .filter((entry): entry is { id: string; top: number } => entry !== null);
+      setActive(activeSection(tops, window.scrollY));
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isMobileMenuOpen]);
 
   return (
     <nav
@@ -58,7 +83,8 @@ export default function Navigation() {
               <a
                 key={link.name}
                 href={link.href}
-                className="relative font-body text-sm text-plug-light/70 hover:text-plug-light transition-colors duration-300 group"
+                aria-current={active === link.href.slice(1) ? "true" : undefined}
+                className="relative font-body text-sm text-plug-light/70 hover:text-plug-light transition-colors duration-300 group aria-[current]:text-plug-light"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-plug-electric to-plug-glow group-hover:w-full transition-all duration-300" />
@@ -77,6 +103,8 @@ export default function Navigation() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-plug-light"
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               {isMobileMenuOpen ? (
@@ -90,7 +118,10 @@ export default function Navigation() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-plug-dark/95 backdrop-blur-xl border-b border-white/5 animate-slide-up">
+          <div
+            id="mobile-menu"
+            className="md:hidden absolute top-full left-0 right-0 bg-plug-dark/95 backdrop-blur-xl border-b border-white/5 animate-slide-up"
+          >
             <div className="px-6 py-8 space-y-6">
               {NAV_LINKS.map((link) => (
                 <a
