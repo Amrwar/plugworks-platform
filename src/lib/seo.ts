@@ -14,6 +14,19 @@ export function canonicalUrl(sectionId?: string): string {
 }
 
 /**
+ * An absolute URL for a page of the site.
+ *
+ * `canonicalUrl` builds fragments for the sections of the home page; this
+ * builds paths for the pages that have their own route, so the two cannot be
+ * confused at the call site. An empty path is the home page itself.
+ */
+export function pageUrl(path?: string): string {
+  const base = SITE.url.replace(/\/+$/, "");
+  const clean = (path ?? "").trim().replace(/^\/+/, "").replace(/\/+$/, "");
+  return clean === "" ? base : `${base}/${clean}`;
+}
+
+/**
  * A description trimmed to something a search result will actually show.
  *
  * Cuts on a word boundary and adds an ellipsis, so a result never ends

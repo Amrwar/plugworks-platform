@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { SITE } from "@/data/site";
-import { canonicalUrl, metaDescription, openGraph, pageTitle } from "./seo";
+import { canonicalUrl, metaDescription, openGraph, pageTitle, pageUrl } from "./seo";
 
 describe("the page title", () => {
   it("uses the tagline when no section is named", () => {
@@ -35,6 +35,41 @@ describe("the canonical url", () => {
 
   it("never doubles a slash", () => {
     expect(canonicalUrl("services")).not.toContain("//#");
+  });
+});
+
+describe("the page url", () => {
+  it("is the bare site url for the home page", () => {
+    expect(pageUrl()).toBe(SITE.url.replace(/\/+$/, ""));
+  });
+
+  it("is the bare site url for an empty path", () => {
+    expect(pageUrl("")).toBe(pageUrl());
+  });
+
+  it("builds a path, not a fragment", () => {
+    expect(pageUrl("work")).toBe(`${SITE.url}/work`);
+    expect(pageUrl("work")).not.toContain("#");
+  });
+
+  it("accepts a path that already carries its leading slash", () => {
+    expect(pageUrl("/faq")).toBe(pageUrl("faq"));
+  });
+
+  it("drops a trailing slash", () => {
+    expect(pageUrl("faq/")).toBe(pageUrl("faq"));
+  });
+
+  it("keeps a nested path intact", () => {
+    expect(pageUrl("work/nile-tower-launch")).toBe(`${SITE.url}/work/nile-tower-launch`);
+  });
+
+  it("never doubles a slash", () => {
+    expect(pageUrl("services").replace("https://", "")).not.toContain("//");
+  });
+
+  it("ignores surrounding whitespace", () => {
+    expect(pageUrl("  about  ")).toBe(pageUrl("about"));
   });
 });
 
