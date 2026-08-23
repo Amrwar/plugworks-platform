@@ -13,6 +13,7 @@ export default function Locations() {
     <section
       ref={sectionRef}
       id="locations"
+      aria-labelledby="locations-heading"
       className="relative py-32 overflow-hidden bg-plug-dark"
     >
       {/* Background pattern */}
@@ -40,7 +41,9 @@ export default function Locations() {
           <span className="inline-block font-display text-sm text-plug-electric uppercase tracking-[0.3em] mb-4">
             Where We Are
           </span>
-          <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-plug-light mb-6">
+          <h2
+ id="locations-heading"
+ className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-plug-light mb-6">
             Plugged In
             <span className="gradient-text"> Globally</span>
           </h2>
