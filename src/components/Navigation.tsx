@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 
+import { NAV_LINKS } from "@/data/navigation";
+
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -13,13 +15,6 @@ export default function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Locations", href: "#locations" },
-    { name: "Contact", href: "#contact" },
-  ];
 
   return (
     <nav
@@ -59,7 +54,7 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {NAV_LINKS.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
@@ -97,7 +92,7 @@ export default function Navigation() {
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 right-0 bg-plug-dark/95 backdrop-blur-xl border-b border-white/5 animate-slide-up">
             <div className="px-6 py-8 space-y-6">
-              {navLinks.map((link) => (
+              {NAV_LINKS.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
