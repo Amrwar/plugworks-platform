@@ -6,6 +6,9 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "node",
+    // The hooks touch the DOM; everything else is pure and runs faster
+    // without a document around it.
+    environmentMatchGlobs: [["src/hooks/**", "jsdom"]],
     include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
   },
   resolve: {
