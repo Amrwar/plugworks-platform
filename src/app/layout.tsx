@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { SITE } from "@/data/site";
 import { organizationJsonLdString } from "@/lib/jsonld";
-import { canonicalUrl, metaDescription, pageTitle } from "@/lib/seo";
+import { canonicalUrl, metaDescription, openGraph, pageTitle } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,13 +20,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: SITE.name }],
   alternates: { canonical: canonicalUrl() },
-  openGraph: {
-    title: pageTitle(),
-    description: metaDescription(),
-    url: canonicalUrl(),
-    siteName: SITE.name,
-    type: "website",
-  },
+  openGraph: openGraph(),
 };
 
 export default function RootLayout({
