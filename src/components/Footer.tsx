@@ -71,8 +71,9 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h4 className="font-display font-semibold text-plug-light mb-6">Quick Links</h4>
-            <ul className="space-y-3">
-              {NAV_LINKS.map((link) => (
+            <nav aria-label="Footer">
+              <ul className="space-y-3">
+                {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -81,8 +82,9 @@ export default function Footer() {
                     {link.name}
                   </a>
                 </li>
-              ))}
-            </ul>
+                ))}
+              </ul>
+            </nav>
           </div>
 
           {/* Services */}
