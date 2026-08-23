@@ -16,6 +16,7 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
+      aria-labelledby="about-heading"
       className="relative py-32 overflow-hidden"
     >
       {/* Background accent */}
@@ -29,7 +30,9 @@ export default function About() {
               <span className="inline-block font-display text-sm text-plug-electric uppercase tracking-[0.3em] mb-4">
                 About Us
               </span>
-              <h2 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-plug-light leading-tight mb-6">
+              <h2
+ id="about-heading"
+ className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-plug-light leading-tight mb-6">
                 We Turn
                 <span className="block gradient-text">Creative Sparks</span>
                 Into Power
